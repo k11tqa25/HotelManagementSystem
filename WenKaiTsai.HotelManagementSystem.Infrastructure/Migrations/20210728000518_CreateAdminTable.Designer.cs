@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WenKaiTsai.HotelManagementSystem.Infrastructure.Data;
 
 namespace WenKaiTsai.HotelManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(HotelManagementSystemDbContext))]
-    partial class HotelManagementSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210728000518_CreateAdminTable")]
+    partial class CreateAdminTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -19,4 +19,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WenKaiTsai.HotelManagementSystem.ApplicationCore\WenKaiTsai.HotelManagementSystem.ApplicationCore.csproj" />
+    <ProjectReference Include="..\WenKaiTsai.HotelManagementSystem.Infrastructure\WenKaiTsai.HotelManagementSystem.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,7 +10,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WenKaiTsai.HotelManagementSystem.ApplicationCore.RespositoryInterfaces;
+using WenKaiTsai.HotelManagementSystem.ApplicationCore.ServiceInterfaces;
 using WenKaiTsai.HotelManagementSystem.Infrastructure.Data;
+using WenKaiTsai.HotelManagementSystem.Infrastructure.Mapper;
+using WenKaiTsai.HotelManagementSystem.Infrastructure.Mapper.Interfaces;
+using WenKaiTsai.HotelManagementSystem.Infrastructure.Repositories;
+using WenKaiTsai.HotelManagementSystem.Infrastructure.Services;
 
 namespace HotelManagementSystemMVC
 {
@@ -27,10 +34,36 @@ namespace HotelManagementSystemMVC
         {
             services.AddControllersWithViews();
 
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IRoomTypeRepository, RoomTypeRepository>();
+            services.AddScoped<IServiceRepository, ServiceRepository>();
+            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IRoomTypeService, RoomTypeService>();
+            services.AddScoped<IServiceService, ServiceService>();
+            services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<ICurrentAdmin, CurrentAdmin>();
+            services.AddScoped<ICustomerMapper, CustomerMapper>();
+            services.AddScoped<IRoomMapper, RoomMapper>();
+            services.AddScoped<IRoomTypeMapper, RoomTypeMapper>();
+            services.AddScoped<IServiceMapper, ServiceMapper>();
+
+            services.AddHttpContextAccessor();
+
             //Inject connection string to DbContext
             services.AddDbContext<HotelManagementSystemDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("HotelManagementSystemDbConnection"));
             });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Cookie.Name = "HotelManagementSystem";
+                    options.ExpireTimeSpan = TimeSpan.FromHours(2);
+                    options.LoginPath = "/Account/Login";  // if the cookie auth fails, go to this url
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +83,8 @@ namespace HotelManagementSystemMVC
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

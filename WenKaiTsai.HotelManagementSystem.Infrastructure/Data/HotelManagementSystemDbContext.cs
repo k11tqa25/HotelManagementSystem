@@ -18,6 +18,7 @@ namespace WenKaiTsai.HotelManagementSystem.Infrastructure.Data
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Service> Services { get; set; }
+        public DbSet<Admin> Admins { get; set; }
 
     }    
 }

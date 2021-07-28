@@ -16,6 +16,8 @@ namespace WenKaiTsai.HotelManagementSystem.ApplicationCore.Entities
         public string CNAME { get; set; }
         [StringLength(100)]
         public string ADDRESS { get; set; }
+        [StringLength(20)]
+        public string PHONE { get; set; }
         [StringLength(40)]
         public string EMAIL { get; set; }
         public DateTime? CHECKIN { get; set; }

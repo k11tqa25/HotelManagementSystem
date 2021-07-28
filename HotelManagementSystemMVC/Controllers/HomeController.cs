@@ -6,26 +6,23 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using WenKaiTsai.HotelManagementSystem.ApplicationCore.ServiceInterfaces;
 
 namespace HotelManagementSystemMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ICustomerService _customerService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ICustomerService customerService)
         {
-            _logger = logger;
+            _customerService = customerService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            var response = await _customerService.ListAllWithDetailsAsync();
+            return View(response);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

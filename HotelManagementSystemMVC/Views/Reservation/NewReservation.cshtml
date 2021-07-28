@@ -1,0 +1,73 @@
+﻿@model WenKaiTsai.HotelManagementSystem.ApplicationCore.Models.CustomerRequestModel
+ 
+
+@{
+    ViewData["Title"] = "New Reservation";
+
+    var rooms = ViewData["Rooms"] as List<WenKaiTsai.HotelManagementSystem.ApplicationCore.Models.RoomResponseModel>;
+}
+
+<div class="d-flex justify-content-center align-content-center">
+    <form class="card mt-5 shadow w-75 p-3" asp-action="NewReservation" asp-controller="Reservation">
+        <h3 class="text-muted">New Reservation</h3>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Name">Name</label>
+                <input asp-for="Name" type="text" class="form-control" id="name" placeholder="Name">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-8">
+                <label asp-for="Address">Address</label>
+                <input asp-for="Address" type="text" class="form-control" id="address" placeholder="1234 Main St">
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="PhoneNumber">Phone Number</label>
+                <input asp-for="PhoneNumber" type="text" class="form-control" id="phone" placeholder="+1 234 567 8900">
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label asp-for="CheckInDate">Check-in Date</label>
+                <input asp-for="CheckInDate" type="datetime-local" class="form-control" id="checkIn">
+                <span asp-validation-for="CheckInDate" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="BookingDays">Duration (Days)</label>
+                <input asp-for="BookingDays" type="number" class="form-control" id="days">
+                <span asp-validation-for="BookingDays" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-2">
+                <label asp-for="TotalPerson"># of People</label>
+                <input asp-for="TotalPerson" type="number" class="form-control" id="totalPerson">
+                <span asp-validation-for="TotalPerson" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-2">
+                <label asp-for="Advance">Advance</label>
+                <input asp-for="Advance" type="number" class="form-control" id="Advance" placeholder="50" value="50">
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="RoomNumber">Select A Room</label>
+            <select  asp-for="RoomNumber" class="form-control" id="roomNumber">
+                @foreach (var room in rooms)
+                {
+                    if (!room.Status)
+                    {
+                    <option value="@room.Id">@room.Id  (@room.RoomType)</option>
+                    }
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Confirm</button>
+    </form>
+</div>
